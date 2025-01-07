@@ -8,6 +8,7 @@ export type PostType = {
     question_id?: number;
     created?: string;
     resume?: string;
+    imagePath?: string
     user: UserType[];
 
 }

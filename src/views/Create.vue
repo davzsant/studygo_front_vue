@@ -1,13 +1,9 @@
 <!-- src/views/Home.vue -->
 <template>
-    <div>
-        <h1>Create Page</h1>
-        <p>Bem-vindo à Create Page !</p>
-    </div>
+    <Selection/>
 </template>
   
-<script lang="ts">
-    export default {
-    name: 'Create',
-    };
+<script setup>
+import Selection from '@/components/Create/Selection.vue';
+
 </script>

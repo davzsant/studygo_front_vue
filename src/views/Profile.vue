@@ -3,10 +3,12 @@
     <div>
       <h1>Profile Page</h1>
       <p>Perfil de Usuario</p>
-      <PropriedadesComputadas/>
+      <Slots>
+        &eqcolon; Conteudo do Botao
+      </Slots>
     </div>
   </template>
   
 <script setup>
-    import PropriedadesComputadas from '@/components/PropriedadesComputadas.vue';
+    import Slots from '@/components/Slots.vue'
 </script>
