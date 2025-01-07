@@ -1,16 +1,20 @@
-import api from "./api"
+import axios from "axios"
+import getUrl, { returnHeader } from "./config"
 
-async function add_post(title:string,description:string,resume?:string){
+export async function add_post(title:string,description:string,resume?:string){
     try{
+        const {success, header, consoleMessage} = returnHeader()
+        if(!success) return { success: false, message: consoleMessage }
+            
         const user_id = localStorage.getItem('userId')
         if(!user_id) return { success: false, message: "Usuario nao autenticado" }
     
-        const response = await api.post('/post/add',{
+        const response = await axios.post(getUrl('/post/add'),{
             title,
             description,
             user_id,
             resume
-        })
+        },{headers:header})
 
         console.log(response)
 
@@ -21,7 +25,7 @@ async function add_post(title:string,description:string,resume?:string){
     }catch(error:any)
     {
         console.log("Erro na requisicao:",error)
-        return { sucess: false, message: error.response.data.message || "Erro desconhecido na requisicao"}
+        return { success: false, message:  "Erro desconhecido na requisicao"}
     }
 
     

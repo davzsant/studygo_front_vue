@@ -54,7 +54,8 @@
         </div>
 
         <div class="addContainer">
-            <button class="btn_adicionar">Adicionar</button>
+            <p v-if="error">{{ error }}</p>
+            <button class="btn_adicionar" @click="adicionar_post">Adicionar</button>
         </div>
     </div>
 
@@ -65,13 +66,31 @@
 </template>
 
 <script setup lang="ts">
+import { add_post } from '@/services/post';
 import { onMounted, onUnmounted, ref } from 'vue';
+import { useRouter } from 'vue-router';
 
     const title = ref<string>('')
     const textContent = ref<string>('')
     const resume = ref<string>('')
     const linkName = ref<string>('')
     const linkContent = ref<string>('')
+    const error = ref<string>('')
+
+    const router = useRouter()
+
+    async function adicionar_post()
+    {
+        const result = await add_post(title.value,textContent.value,resume.value)
+        if(!result?.success)
+        {
+            error.value = result?.message
+            return
+        }
+
+        router.push('/timeline')
+        
+    }
 </script>
 
 <style scoped>
