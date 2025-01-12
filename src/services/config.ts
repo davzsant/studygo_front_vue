@@ -13,7 +13,7 @@ export function returnHeader()
     }
     return {
         success: true,
-        header: {
+        headers: {
             'Authorization': `Bearer ${token}`,
         }
     }

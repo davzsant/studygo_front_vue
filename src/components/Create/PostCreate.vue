@@ -4,21 +4,9 @@
             <label for="title">Titulo</label>
             <input type="text" name="title" v-model="title">
         </div>
+        
         <div class="contentCreator">
-            <div class="styleText">
-                <button title="text weight"><i class="bi bi-type-bold"></i></button>
-                <button title="italic text"><i class="bi bi-type-italic"></i></button>
-                <button title="extra-explain"><i class="bi bi-chat-quote"></i></button>
-                <button title="text-color"><i class="bi bi-palette"></i></button>
-                <button title="topics"><i class="bi bi-list-task"></i></button>
-                <button title="text background color"><i class="bi bi-paint-bucket"></i></button>
-                <button title="add link"><i class="bi bi-paperclip"></i></button>
-                <button title="explanation of one word"><i class="bi bi-question"></i></button>
-                <button title="underline text"><i class="bi bi-type-underline"></i></button>
-                <button title="title 2 - subtitle"><i class="bi bi-fonts"></i></button>
-                <button title="title 3 - topic"><i class="bi bi-type-h3"></i></button>
-            </div>
-            <textarea v-model="textContent" class="textContent"></textarea>
+            <QuillEditor theme="snow" ref="quillEditor" v-model="textContent" @text-change="atualizarTexto"></QuillEditor>
         </div>
 
         <div class="resumeContainer">
@@ -61,17 +49,19 @@
 
     <div class="preview">
         <h1>{{ title }}</h1>
-        <p>{{ textContent }}</p>
+        <div v-html="textContent"></div>
     </div>
 </template>
 
 <script setup lang="ts">
 import { add_post } from '@/services/post';
-import { onMounted, onUnmounted, ref } from 'vue';
+import { QuillEditor } from '@vueup/vue-quill';
+import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 
     const title = ref<string>('')
-    const textContent = ref<string>('')
+    const quillEditor = ref(null)
+    const textContent = ref<string>('asdasds')
     const resume = ref<string>('')
     const linkName = ref<string>('')
     const linkContent = ref<string>('')
@@ -81,7 +71,8 @@ import { useRouter } from 'vue-router';
 
     async function adicionar_post()
     {
-        const result = await add_post(title.value,textContent.value,resume.value)
+        console.log(quillEditor.value.getHTML())
+        const result = await add_post(title.value,quillEditor.value.getHTML(),resume.value)
         if(!result?.success)
         {
             error.value = result?.message
@@ -89,7 +80,12 @@ import { useRouter } from 'vue-router';
         }
 
         router.push('/timeline')
-        
+    }
+
+    function atualizarTexto(value:any)
+    {
+        console.log(quillEditor)
+        textContent.value = quillEditor.value.getHTML();
     }
 </script>
 

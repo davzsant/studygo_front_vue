@@ -6,16 +6,8 @@ const api = axios.create({
 })
 
 api.interceptors.request.use(config => {
-    const token = localStorage.getItem('jwtToken')
-    const csrfToken = localStorage.getItem('csrfToken')
-
-    if(token && csrfToken)
-    {
-        config.headers.Authorization = `Bearer ${token}`
-        config.headers['X-CSRF-Token'] = csrfToken
-    }
-
-    return config
+  const token = localStorage.getItem('jwtToken')
+  const csrfToken = localStorage.getItem('csrfToken')
 },(error) => {
     return Promise.reject(error)
 })

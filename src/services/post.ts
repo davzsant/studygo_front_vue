@@ -1,20 +1,22 @@
 import axios from "axios"
 import getUrl, { returnHeader } from "./config"
 
-export async function add_post(title:string,description:string,resume?:string){
+export async function add_post(title:string,body:string,resume?:string){
     try{
-        const {success, header, consoleMessage} = returnHeader()
+        const {success, headers, consoleMessage} = returnHeader()
         if(!success) return { success: false, message: consoleMessage }
             
         const user_id = localStorage.getItem('userId')
         if(!user_id) return { success: false, message: "Usuario nao autenticado" }
-    
+        console.log({headers})
         const response = await axios.post(getUrl('/post/add'),{
             title,
-            description,
+            body,
             user_id,
             resume
-        },{headers:header})
+        },{headers:{
+            'Authorization': 'Bearer'
+        }})
 
         console.log(response)
 

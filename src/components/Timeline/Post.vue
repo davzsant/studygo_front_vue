@@ -3,7 +3,7 @@
         <router-link :to="{name: 'Post',params:{id: content.id}}">
             <h1>{{ content?.title }}</h1>
         </router-link>
-        <p>{{ mainText }}</p>
+        <div v-html="mainText"></div>
 
     </div>
 </template>
@@ -17,13 +17,14 @@ import { ref } from 'vue';
             required: true
         }
     })
-
-    const mainText = ref((props.content?.imagePath && props.content.body && props.content.body.length <= 300 ? props.content.body : props.content.resume))
+    console.log(props.content)
+    const mainText = ref(props.content.body)
+    /* const mainText = ref((props.content?.imagePath && props.content.body && props.content.body.length <= 300 ? props.content.body : props.content.resume)) */
 </script>
 
 <style scoped>
 
-    div{
+    div.post{
         margin-top: 10px;
         border-radius: 3px;
         border: 1px solid rgba(255, 255, 255, 0.492);
@@ -32,22 +33,26 @@ import { ref } from 'vue';
         background-color: #181718;
         min-height: 20vh;
         max-height: 60vh;
-        width: 30vw;    
+        width: 50vw;
+        overflow-wrap: break-word;
     }
 
-    div > a > h1{
+    div.post > a > h1{
         text-align: center;
         text-transform: capitalize;
+        color: gold;
+        text-transform: uppercase;
+        font-weight: bolder;
     }
 
-    div > a{
+    div.post > a{
         text-decoration: none;
         color: white;
         font-weight: bolder;
     }
 
     @media screen and (max-width:1000px) {
-        div{
+        div.post{
             width: 60%;
         }
     }
