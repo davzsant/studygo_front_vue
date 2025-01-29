@@ -14,7 +14,7 @@ export function returnHeader()
     return {
         success: true,
         headers: {
-            'Authorization': `Bearer ${token}`,
+            'Authorization': `${token}`,
         }
     }
 }

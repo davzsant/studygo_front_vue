@@ -1,5 +1,6 @@
 import axios from "axios";
 import api from "./api";
+import { returnHeader } from "./config";
 
 type loginResponse = {
     success: boolean,
@@ -31,7 +32,7 @@ async function login(userData:string,password:string): Promise<loginResponse>
     
         console.log(response)
     
-        localStorage.setItem('userId',response.data.user_id)
+        localStorage.setItem('userId',response.data.userId)
         if(response.data.nextStep === true)
         {
             return {
@@ -70,17 +71,14 @@ async function check_code(code:string) {
                 message: 'Não Há Token CSRF'
             }
         }
-    
-        /* const headers = {
-            'Content-Type': 'application/json',
-            'X-CSRF-Token': csrfToken,
-        } */
+
+        const {headers } = returnHeader()
 
         const user_id = localStorage.getItem('userId')
         const response = await axios.post('http://localhost:8765/api/user/verify_code',{
             user_id,
             user_code:code
-        })
+        },{headers:headers})
 
         console.log(response)
     

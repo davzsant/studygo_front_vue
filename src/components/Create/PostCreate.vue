@@ -73,13 +73,14 @@ import { useRouter } from 'vue-router';
     {
         console.log(quillEditor.value.getHTML())
         const result = await add_post(title.value,quillEditor.value.getHTML(),resume.value)
+        console.log("Resultado:",result)
         if(!result?.success)
         {
             error.value = result?.message
             return
         }
 
-        router.push('/timeline')
+        await router.replace('/timeline')
     }
 
     function atualizarTexto(value:any)

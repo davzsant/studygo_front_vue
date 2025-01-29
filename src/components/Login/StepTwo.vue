@@ -30,12 +30,14 @@
     {
         message.value = "Validando..."
         const response = await log.check_code(code.value)
+        console.log(response)
         if(!response.success)
         {
+            console.log("Problema")
             error.value = response.message
             return
         }
-
+        console.log("Muda de rota")
         router.push('/')
     }
 </script>
