@@ -1,14 +1,21 @@
 <!-- src/views/Home.vue -->
 <template>
-    <div>
-        <h1>{{ post?.title }}</h1>
+    
+    <div class="post">
+        <CreatorBoard :user="post?.user"/>
+        <PostBody  :post="post"/>
+        <Actions/>
     </div>
+
 </template>
   
 <script setup lang="ts">
+    import Actions from '@/components/Post/Actions.vue';
+import CreatorBoard from '@/components/Post/CreatorBoard.vue';
+    import PostBody from '@/components/Post/PostBody.vue';
     import { get_post_data } from '@/services/post';
-import type { PostType } from '@/types/PostType';
-    import { ref,onMounted } from 'vue';
+    import type { PostType } from '@/types/PostType';
+    import { ref, onMounted } from 'vue';
     import { useRoute } from 'vue-router';
 
     const route = useRoute()
@@ -28,6 +35,8 @@ import type { PostType } from '@/types/PostType';
                 isLoading.value = false
                 error.value = response.message
             }
+
+            post.value = response.post
             
         
         }catch(err){
@@ -39,3 +48,16 @@ import type { PostType } from '@/types/PostType';
         }
     })
 </script>
+
+<style scoped>
+    .post{
+        background-color: #151515;
+        color: white;
+        padding: 5%;
+        border-radius: 5px;
+        margin: 5%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+</style>

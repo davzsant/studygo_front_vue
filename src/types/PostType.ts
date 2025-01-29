@@ -9,6 +9,6 @@ export type PostType = {
     created?: string;
     resume?: string;
     imagePath?: string
-    user: UserType[];
+    user: UserType  ;
 
 }

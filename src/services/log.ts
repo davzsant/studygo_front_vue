@@ -33,6 +33,8 @@ async function login(userData:string,password:string): Promise<loginResponse>
         console.log(response)
     
         localStorage.setItem('userId',response.data.userId)
+        console.log(localStorage.getItem('userId'))
+        console.log(response.data.userId)
         if(response.data.nextStep === true)
         {
             return {
@@ -99,7 +101,7 @@ async function check_code(code:string) {
 
     }catch(error:any)
     {
-        console.log("teste")
+        console.log("teste",error)
         return {
             success: false,
             message:  error.response?.data?.message || 'Erro no envio do codigo'
